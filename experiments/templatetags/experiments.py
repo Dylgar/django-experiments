@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+
 
 from django import template
 from django.core.urlresolvers import reverse
@@ -80,11 +80,11 @@ def _parse_token_contents(token_contents):
 def experiment(parser, token):
     """
     Split Testing experiment tag has the following syntax :
-    
+
     {% experiment <experiment_name> <alternative>  %}
     experiment content goes here
     {% endexperiment %}
-    
+
     If the alternative name is neither 'test' nor 'control' an exception is raised
     during rendering.
     """

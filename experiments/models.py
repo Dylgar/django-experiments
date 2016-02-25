@@ -65,13 +65,13 @@ class Experiment(models.Model):
 
     @property
     def default_alternative(self):
-        for alternative, alternative_conf in self.alternatives.iteritems():
+        for alternative, alternative_conf in self.alternatives.items():
             if alternative_conf.get('default'):
                 return alternative
         return conf.CONTROL_GROUP
 
     def set_default_alternative(self, alternative):
-        for alternative_name, alternative_conf in self.alternatives.iteritems():
+        for alternative_name, alternative_conf in self.alternatives.items():
             if alternative_name == alternative:
                 alternative_conf['default'] = True
             elif 'default' in alternative_conf:
@@ -81,7 +81,7 @@ class Experiment(models.Model):
         if all('weight' in alt for alt in self.alternatives.values()):
             return weighted_choice([(name, details['weight']) for name, details in self.alternatives.items()])
         else:
-            return random.choice(self.alternatives.keys())
+            return random.choice(list(self.alternatives.keys()))
 
     def __unicode__(self):
         return self.name
@@ -96,7 +96,7 @@ class Experiment(models.Model):
             'relevant_chi2_goals': self.relevant_chi2_goals,
             'relevant_mwu_goals': self.relevant_mwu_goals,
             'default_alternative': self.default_alternative,
-            'alternatives': ','.join(self.alternatives.keys()),
+            'alternatives': ','.join(list(self.alternatives.keys())),
         }
         return data
 
@@ -116,7 +116,7 @@ class Enrollment(models.Model):
         unique_together = ('user', 'experiment')
 
     def __unicode__(self):
-        return u'%s - %s' % (self.user, self.experiment)
+        return '%s - %s' % (self.user, self.experiment)
 
 
 def weighted_choice(choices):
@@ -127,5 +127,3 @@ def weighted_choice(choices):
         upto += w
         if upto >= r:
             return c
-
-

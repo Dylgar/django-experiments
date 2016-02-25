@@ -156,4 +156,3 @@ class ExperimentAdmin(admin.ModelAdmin):
         return HttpResponse()
 
 admin.site.register(Experiment, ExperimentAdmin)
-

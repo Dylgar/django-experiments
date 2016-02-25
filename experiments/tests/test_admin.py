@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+
 import json
 
 from django.contrib.auth.models import User, Permission
@@ -44,7 +44,7 @@ class AdminTestCase(TestCase):
                 'experiment': experiment.name,
                 'alternative': alternative,
             })
-            self.assertDictEqual(json.loads(response.content), {
+            self.assertDictEqual(json.loads(response.content.decode()), {
                 'success': True,
                 'alternative': alternative,
             })
